@@ -5,12 +5,20 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model Employee {
   id        Int      @id @default(autoincrement())
-  name      String
-  email     String
+  name      String   
+  email     String   @unique
+  role      Role     @default(INTERN)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  INTERN
+  ENGINEER
+  ADMIN
 }
